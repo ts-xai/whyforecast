@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Research Consent</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #f5f5f5;
+            padding: 0.5em;
+        }
+    </style>
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <h1 class="title is-1">&#128187; WhyForecast</h1>
+        <div class="text-container">
+            <p class="content is-medium">
+                Welcome to WhyForecast! This is an online research study about a type of machine learning known as time series
+                forecasting. The study consists of a short tutorial introducing the topic, followed by a series of
+                multiple-choice exercises based on some real-world examples, and concludes with a short questionnaire. It will take
+                roughly 25 minutes to complete.&#128515;
+
+
+<!--                Welcome to our interactive platform designed to evaluate the clarity and usefulness of a time-->
+<!--                series forecasting explanation method: TSFeatLIME. In this exercise, you'll have the opportunity to-->
+<!--                interact with a time series forecasting machine learning model which uses electricity consumption and furniture-->
+<!--                sales data as examples. You'll then assess how well this explanation method elucidates the underlying predictive model's decisions.-->
+<!--                Before that, you have a chance to view a short tutorial on time series ensuring you understand some basic-->
+<!--                concepts in time series forecasting. At the end of this study, you will also be presented with an evaluation-->
+<!--                questionnaire.&#128515;-->
+            </p>
+        </div>
+        <br>
+
+        <p class="content is-medium">Ethics approval for this experiment was granted on 04/04/2024 by the University of Bristol Faculty of Engineering Research Ethics Committee, with the reference code 17907. If you have any questions, concerns,
+        or feedback, please feel free to contact <a href="mailto:ex20249@bristol.ac.uk">Hongnan Ma</a> at the University of Bristol.
+        </p>
+        <h2 class="title is-2">&#128221; Statement of consent</h2>
+        <ul>
+            <li>
+                <p class="content is-medium">&#9679; I have read and understood the study information available on
+                    Prolific.</p>
+            </li>
+            <li>
+                <p class="content is-medium">&#9679; I agree that my anonymised data made available to this study
+                    through Prolific may be used for future research.</p>
+            </li>
+            <li>
+                <p class="content is-medium">&#9679; I agree that any data I submit through this website may be linked
+                    to my Prolific data and used for future research.</p>
+            </li>
+
+            <li>
+                <p class="content is-medium">&#9679; I understand that my data will be securely stored at the University
+                    of
+                    Bristol and retained in accordance with the university's policy and the aims of the study, for ten
+                    years after its completion.</p>
+            </li>
+            <li>
+                <p class="content is-medium">&#9679; I understand that my participation in the study is voluntary.</p>
+            </li>
+            <li>
+                <p class="content is-medium">&#9679; I understand that any financial compensation will be determined by
+                    Prolific.</p>
+            </li>
+            <li>
+                <p class="content is-medium">&#9679; I confirm that I do not fall under any of the exclusion
+                    criteria.</p>
+            </li>
+        </ul>
+    </div>
+    <div class="has-text-centered mt-6">
+        <form action="https://app.prolific.co/submissions/complete?cc={consent_not_given}" method="post"
+              style="display: inline-block; margin-right: 10px;">
+            <button type="submit" class="button is-danger">I do not consent to participate</button>
+        </form>
+        <form action="/tutorial" method="post" style="display: inline-block;">
+            <input type="hidden" name="prolific_id" value="#PROLIFIC_ID#">
+            <input type="hidden" name="consent_for" value="#SESSION_ID#">
+            <button type="submit" class="button is-primary">I consent to participate</button>
+        </form>
+    </div>
+    </div>
+</section>
+<footer class="footer">
+    <div class="level">
+        <div class="level-left">
+            <div class="level-item">
+                <p><strong>Prolific ID:</strong> #PROLIFIC_ID#</p>
+            </div>
+        </div>
+        <div class="level-right">
+            <div class="level-item">
+                <p><strong>Session ID:</strong> #SESSION_ID#</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
