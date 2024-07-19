@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Survey</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          var urlParams = new URLSearchParams(window.location.search);  // verify that this works with POST and make generic
+          var showOptional = urlParams.get('show_optional');
+          var optionalQuestion = document.getElementById('optional_question');
+          if (showOptional === 'true') {
+              optionalQuestion.style.display = 'block';
+          } else {
+              optionalQuestion.style.display = 'none';
+          }
+      });
+    </script>
+    <style>
+      .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #f5f5f5;
+
+        /* Adjusted padding for a narrower footer */
+        padding: 0.5em; /* Reduced from 1em to 0.5em */
+        }
+      /* Custom styles for the slider */
+      .slider {
+        -webkit-appearance: none;  /* Override default CSS styles */
+        appearance: none;
+        width: 100%; /* Full-width */
+        height: 1em; /* Specified height */
+        background: #d3d3d3; /* Grey background */
+        outline: none; /* Remove outline */
+        opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+        transition: opacity .2s; /* Transition effects on mouse-over */
+      }
+      /* Mouse-over effects */
+      .slider:hover {
+        opacity: 1; /* Fully shown on mouse-over */
+      }
+      /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+      .slider::-webkit-slider-thumb {
+        -webkit-appearance: none; /* Override default look */
+        appearance: none;
+        width: 25px; /* Set a specific slider handle width */
+        height: 25px; /* Slider handle height */
+        background: #4CAF50; /* Green background */
+        cursor: pointer; /* Cursor on hover */
+      }
+      .slider::-moz-range-thumb {
+        width: 25px; /* Set a specific slider handle width */
+        height: 25px; /* Slider handle height */
+        background: #4CAF50; /* Green background */
+        cursor: pointer; /* Cursor on hover */
+      }
+      /* Custom styles for the slider value */
+      #slider_value {
+        text-align: center;
+        font-size: 1em;
+        font-weight: bold;
+      }
+      .likert:last-of-type {border-bottom:0;}
+      .likert:before {
+          content: '';
+          position:relative;
+          top:11px;
+          left:9.5%;
+          display:block;
+          background-color:#efefef;
+          height:4px;
+          width:78%;
+        }
+      .likert li {
+          display:inline-block;
+          width:19%;
+          text-align:center;
+          vertical-align: top;
+        }
+      .likert li input[type=radio] {
+          display:block;
+          position:relative;
+          top:0;
+          left:50%;
+          margin-left:-6px;
+
+        }
+      .likert li label {width:100%;}
+
+    </style>
+  </head>
+  <body>
+  <section class="section">
+      <div class="container">
+          <h1 class="title is-1">&#128203;Questionnaire</h1>
+          <form method="POST" action="/complete">
+              <div class="section" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px;">
+                  <h2 style="margin-top: 0; font-size: 24px; font-weight: bold;">Basic Information</h2>
+                  <label class="label">Do you have a STEM background? (STEM stands for science, technology, engineering and mathematics) </label>
+                  <div class="field">
+                      <label class="radio">
+                          <input type="radio" name="stem_background" value="yes">
+                          Yes
+                      </label>
+                      <label class="radio">
+                          <input type="radio" name="stem_background" value="no">
+                          No
+                      </label>
+                  </div>
+
+                  <label class="label">Do you have machine learning experience?</label>
+                  <div class="field">
+                      <label class="radio">
+                          <input type="radio" name="ml_experience" value="yes">
+                          Yes
+                      </label>
+                      <label class="radio">
+                          <input type="radio" name="ml_experience" value="no">
+                          No
+                      </label>
+                  </div>
+
+                  <label class="label">Do you have any prior time series forecasting experience?</label>
+                  <div class="field" style="display: flex; align-items: center;">
+                      <div class="control">
+                          <label style="margin-right: 10px;">
+                              <input type="radio" name="time_series_experience" value="yes" required> Yes
+                          </label>
+                          <label>
+                              <input type="radio" name="time_series_experience" value="no">No
+                          </label>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="section" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px;">
+                  <h2 style="margin-top: 0; font-size: 24px; font-weight: bold;">System satisfaction & The helpfulness
+                      of explanations</h2>
+                  <!-- Question 1 -->
+                  <div class="field">
+                      <label class="label">Question 1: How difficult was it for you to understand the concepts of lag and rolling window? </label>
+                      <div class="control">
+                          <ul class='likert'>
+                              <li><input type="radio" name="question1" value="very_easy"><label>Very easy</label></li>
+                              <li><input type="radio" name="question1" value="easy"><label>Easy</label></li>
+                              <li><input type="radio" name="question1" value="neutral"><label>Neutral</label></li>
+                              <li><input type="radio" name="question1" value="hard"><label>Hard</label></li>
+                              <li><input type="radio" name="question1" value="very_hard"><label>Very hard</label></li>
+                          </ul>
+                      </div>
+                  </div>
+
+                  <div class="field">
+                      <label class="label">Question 2: Do you find the global explanation helps you understand time series prediction? </label>
+                      <div class="control">
+                          <ul class='likert'>
+                              <li><input type="radio" name="question2" value="very_helpful"><label>Very helpful</label></li>
+                              <li><input type="radio" name="question2" value="helpful"><label>Helpful</label></li>
+                              <li><input type="radio" name="question2" value="neutral"><label>Neutral</label></li>
+                              <li><input type="radio" name="question2" value="not_helpful"><label>Not helpful</label></li>
+                              <li><input type="radio" name="question2" value="not_very_helpful"><label>Not very helpful</label></li>
+                          </ul>
+                      </div>
+                  </div>
+
+                  <label class="label">Question 3: Which explanation conveys useful information when doing your prediction? </label>
+                  <div class="field">
+                      <label class="radio">
+                          <input type="radio" name="question3" value="lag">
+                          Lag
+                      </label>
+                      <label class="radio">
+                          <input type="radio" name="question3" value="rw">
+                          Rolling window
+                      </label>
+                      <label class="radio">
+                          <input type="radio" name="question3" value="either">
+                          I don't think they are helpful
+                      </label>
+                       <label class="radio">
+                          <input type="radio" name="question3" value="both">
+                          Both are helpful
+                      </label>
+                  </div>
+
+                  <div class="field">
+                      <label class="label">Question 4: Our exercises simulate a scenario where changing certain values
+                          leads to specific events, and local explanations provide insights into such cases. Do you
+                          think this would be helpful in real-world applications?
+                      </label>
+                      <div class="control">
+                          <ul class='likert'>
+                              <!-- Likert scale options for Question 2 -->
+                              <li><input type="radio" name="question4" value="very_helpful"><label>Very helpful</label>
+                              </li>
+                              <li><input type="radio" name="question4" value="helpful"><label>Helpful</label></li>
+                              <li><input type="radio" name="question4" value="neutral"><label>Neutral</label></li>
+                              <li><input type="radio" name="question4" value="not_help"><label>Not helpful</label></li>
+                              <li><input type="radio" name="question4" value="not_very_helpful"><label>Not very
+                                  helpful</label></li>
+                          </ul>
+                      </div>
+                  </div>
+
+<!--                  <div class="field">-->
+<!--                      <label class="label">Question 4: How did the explanations help you to make predictions?-->
+<!--                      </label>-->
+<!--                      <div class="control">-->
+<!--                          <ul class='likert'>-->
+<!--                              &lt;!&ndash; Likert scale options for Question 2 &ndash;&gt;-->
+<!--                              <li><input type="radio" name="question4" value="very_helpful"><label>Very helpful</label></li>-->
+<!--                              <li><input type="radio" name="question4" value="helpful"><label>Helpful</label></li>-->
+<!--                              <li><input type="radio" name="question4" value="neutral"><label>Neutral or N/A(not applicable)</label></li>-->
+<!--                              <li><input type="radio" name="question4" value="not_help"><label>Not helpful</label></li>-->
+<!--                              <li><input type="radio" name="question4" value="not_very_helpful"><label>Not very helpful</label></li>-->
+<!--                          </ul>-->
+<!--                      </div>-->
+<!--                  </div>-->
+
+
+
+
+
+                  <div class="field">
+                      <label class="label">Question 5: What is your overall experience with this study?</label>
+                      <div class="control">
+                          <ul class='likert'>
+                              <li><input type="radio" name="question5" value="very_satisfied"><label>Very satisfied</label></li>
+                              <li><input type="radio" name="question5" value="satisfied"><label>Satisfied</label></li>
+                              <li><input type="radio" name="question5" value="neutral"><label>Neutral</label></li>
+                              <li><input type="radio" name="question5" value="not_satisfied"><label>Not satisfied</label></li>
+                              <li><input type="radio" name="question5" value="not_very_satisfied"><label>Not very satisfied</label></li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="section" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px;">
+                  <h2 style="margin-top: 0; font-size: 24px; font-weight: bold;">Curiosity & Trust</h2>
+                  <div class="field">
+                      <label class="label">Question 6: I wanted to understand how time series forecasting works, and
+                          this study had helped me to achieve this to some extent.</label>
+                      <div class="control">
+                          <ul class='likert'>
+                              <li><input type="radio" name="question6" value="agree_strongly"><label>I agree strongly</label></li>
+                              <li><input type="radio" name="question6" value="agree_somewhat"><label>I agree somewhat</label></li>
+                              <li><input type="radio" name="question6" value="neutral"><label>I'm neutral about it</label></li>
+                              <li><input type="radio" name="question6" value="disagree_somewhat"><label>I disagree somewhat</label></li>
+                              <li><input type="radio" name="question6" value="disagree_strongly"><label>I disagree strongly</label></li>
+                          </ul>
+                      </div>
+                  </div>
+
+                  <div class="field">
+                      <label class="label">Question 7: I feel the explanations have enhanced my confidence in AI systems in general.</label>
+                      <div class="control">
+                          <ul class='likert'>
+                              <li><input type="radio" name="question7" value="agree_strongly"><label>I agree strongly</label></li>
+                              <li><input type="radio" name="question7" value="agree_somewhat"><label>I agree somewhat</label></li>
+                              <li><input type="radio" name="question7" value="neutral"><label>I'm neutral about it</label></li>
+                              <li><input type="radio" name="question7" value="disagree_somewhat"><label>I disagree somewhat</label></li>
+                              <li><input type="radio" name="question7" value="disagree_strongly"><label>I disagree strongly</label></li>
+                          </ul>
+                      </div>
+                  </div>
+
+                  <div class="field">
+                      <label class="label">Question 8: I believe good XAI tools will help the adoption of AI technologies.</label>
+                      <div class="control">
+                          <ul class='likert'>
+                              <li><input type="radio" name="question8" value="agree_strongly"><label>I agree strongly</label></li>
+                              <li><input type="radio" name="question8" value="agree_somewhat"><label>I agree somewhat</label></li>
+                              <li><input type="radio" name="question8" value="neutral"><label>I'm neutral about it</label></li>
+                              <li><input type="radio" name="question8" value="disagree_somewhat"><label>I disagree somewhat</label></li>
+                              <li><input type="radio" name="question8" value="disagree_strongly"><label>I disagree strongly</label></li>
+                          </ul>
+                      </div>
+                  </div>
+
+<!--                  <div class="field">-->
+<!--                      <label class="label">Question 9: I feel safe that when I rely on the explanation because I will get the right answers.</label>-->
+<!--                      <div class="control">-->
+<!--                          <ul class='likert'>-->
+<!--                              <li><input type="radio" name="question9" value="agree_strongly"><label>I agree strongly</label></li>-->
+<!--                              <li><input type="radio" name="question9" value="agree_somewhat"><label>I agree somewhat</label></li>-->
+<!--                              <li><input type="radio" name="question9" value="neutral"><label>I'm neutral about it</label></li>-->
+<!--                              <li><input type="radio" name="question9" value="disagree_somewhat"><label>I disagree somewhat</label></li>-->
+<!--                              <li><input type="radio" name="question9" value="disagree_strongly"><label>I disagree strongly</label></li>-->
+<!--                          </ul>-->
+<!--                      </div>-->
+<!--                  </div>-->
+              </div>
+
+
+
+              <div class="section" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px;">
+                  <h2 style="margin-top: 0; font-size: 24px; font-weight: bold;">Overall feedback</h2>
+                  <div class="field" style="margin-bottom: 10px;">
+                      <label for="challenges" class="label">Could you provide a description of how you complete exercises based on the explanation?  </label>
+                      <textarea id="challenges" class="textarea" name="challenges" placeholder="Your response"
+                                rows="4"></textarea>
+                  </div>
+
+                  <div class="field">
+                      <label for="additional_comments" class="label">Do you have any additional comments or
+                          feedback? </label>
+                      <textarea id="additional_comments" class="textarea" name="additional_comments"
+                                placeholder="Your feedback" rows="4"></textarea>
+                  </div>
+                  <!-- Form fields for System Satisfactory -->
+              </div>
+
+              <!--            <iframe src="https://forms.office.com/r/DxbYXP7iY9" width="100%" height="800px" frameborder="0" marginheight="0" marginwidth="0" >Loading…</iframe>-->
+
+              <div class="control" style="text-align: center;">
+                  <button type="submit" class="button is-link">Submit</button>
+              </div>
+          </form>
+
+      </div>
+  </section>
+
+
+  <footer class="footer">
+      <div class="level">
+          <div class="level-left">
+              <div class="level-item">
+                  <p><strong>Prolific ID:</strong> #PROLIFIC_ID#</p>
+              </div>
+          </div>
+          <div class="level-right">
+              <div class="level-item">
+                  <p><strong>Session ID:</strong> #SESSION_ID#</p>
+              </div>
+          </div>
+      </div>
+  </footer>
+
+
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          const form = document.querySelector('form');
+          form.addEventListener('submit', function (event) {
+              event.preventDefault(); // Prevent form submission to check answers first
+
+              // Check STEM background question
+              const stemBackground = document.querySelectorAll('input[name="stem_background"]');
+              if (!isChecked(stemBackground)) {
+                  alert('Please answer the STEM background question.');
+                  return;
+              }
+
+              // Check machine learning experience question
+              const mlExperience = document.querySelectorAll('input[name="ml_experience"]');
+              if (!isChecked(mlExperience)) {
+                  alert('Please answer the machine learning experience question.');
+                  return;
+              }
+
+              // Check time series forecasting experience question
+              const timeSeriesExperience = document.querySelectorAll('input[name="time_series_experience"]');
+              if (!isChecked(timeSeriesExperience)) {
+                  alert('Please answer the time series forecasting experience question.');
+                  return;
+              }
+
+              // Check all likert scale questions (Questions 1 to 5)
+              for (let i = 1; i <= 8; i++) {
+                  const likertQuestion = document.querySelectorAll(`input[name="question${i}"]`);
+                  if (!isChecked(likertQuestion)) {
+                      alert(`Please answer Question ${i}.`);
+                      return;
+                  }
+              }
+
+              // Check for method used question
+
+              const challenges = document.getElementById('challenges');
+              if (!challenges.value.trim() || challenges.value.trim().toLowerCase() === "no") {
+                  alert('Please mention any challenges you faced');
+                  return;
+              }
+
+              // Check for additional comments question
+              const additionalComments = document.getElementById('additional_comments');
+              if (!additionalComments.value.trim() || additionalComments.value.trim().toLowerCase() === "no") {
+                  alert('Please provide any additional comments or feedback');
+                  return;
+              }
+
+              // If all checks pass, submit the form
+              form.submit();
+          });
+
+          // Function to check if any radio button in a group is checked
+          function isChecked(radioButtons) {
+              return Array.from(radioButtons).some(radio => radio.checked);
+          }
+      });
+  </script>
+  </body>
+</html>

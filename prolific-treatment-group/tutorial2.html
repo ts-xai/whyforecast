@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Tutorial - Research Study</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1"></script>
+    <style>
+        .paragraph-spacing {
+            margin-top: 20px; /* Adjust the margin-top value to control the spacing */
+        }
+        .figure-container {
+        text-align: center;
+        width: 100%; /* Adjust as needed */
+        }
+
+        .figure-container img {
+        width: auto; /* Adjust as needed */
+        max-width: 100%; /* Ensures image responsiveness */
+        display: block;
+        margin: auto;
+        }
+
+        .figure-container figcaption {
+        display: block; /* Ensures that the caption is not inline */
+        margin-top: 8px;
+        }
+        .footer {
+          position: fixed;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          background-color: #f5f5f5;
+          padding: 0.5em;
+        }
+
+        /* Basic CSS styles for figures */
+        .figure-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .figure {
+            text-align: center;
+            margin: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+
+
+
+        .content.is-medium {
+            margin-bottom: 5px; /* Reduce this value as needed */
+        }
+
+    </style>
+
+</head>
+
+
+
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title is-1">&#128214;Tutorial</h1>
+            <h4 class="title is-4">&#x1F537; What is time series forecasting?</h4>
+            <p class="content is-medium">
+                Time series forecasting is the use of a model to predict future values based on previously observed values.
+                 We use the clothing sales data in blue dots as an example.
+
+            </p>
+            <div class="content is-medium">
+                <ul>
+                    <li><b>Glass-box Model:</b>
+                        Glass-box models afford human comprehensibility through logical expressions (e.g. rules,
+                        decision trees, linear regression, etc). In the example below, a linear model uses a linear function, represented by a
+                        red dashed line, to model the relationship between time points and output values, thus explaining how it comes
+                        up with its predictions.
+
+                    </li>
+                    <canvas id="glassbox" width="500" height="120"></canvas>
+
+                    <li><b>Black-box Model:</b> In black-box models, the relationship between inputs and outputs is
+                        obfuscated and often not easily intelligible to humans.
+                    </li>
+                    <img src="figure/blackbox.png" alt="blackbox" style="display: block; margin-left: auto; margin-right: auto; width: 60%;"><img>
+                </ul>
+            </div>
+
+
+            <h4 class="title is-4">&#x1F537; What are the explanation methods of time series forecasting models?</h4>
+            <p class="content is-medium">
+                Explainable AI (XAI) refers to developing models that not only solve problems, but also present their
+                decision-making process in a way that it is interpretable by humans. In this study, we introduce the following explanation approaches.
+            </p>
+<!--                It is worth noting that Explainable AI is not intended to show all the details and-->
+<!--                processes in the black box model, but to focus more on the presentation of these in a way that humans-->
+<!--                can understand.-->
+<!--            -->
+
+            <div class="content is-medium">
+                <ul>
+                    <li><b>Global explanation:</b> For the time series data we use, there is a 12-month cycle. The global explanation is the average influence of each
+                        month across the entire time series data on the forecasting results.
+                    </li>
+                    <img src="figure/SHAPVALUE.png" alt="shapvalue" style="display: block; margin-left: auto; margin-right: auto; width: 40%;"><img>
+
+                    <p class="content is-medium"><i><b>Explanation</b>: Overall, the sales value of the same month last year
+                        played an important role in forecasting the sales value of the current month.</i> </p>
+
+                    <li><b>Local explanation:</b> Local explanation reveals how the
+                        forecast result at each time point is affected by the previous 12 values. In this example,
+                        the input sequence is from July 2023 to June 2024, and the sales value corresponding to the
+                        month of July 2024 is to be predicted.
+                    </li>
+                    <div style=" justify-content: space-around;">
+                        <canvas id="localdata" width="500" height="120"></canvas>
+                        <canvas id="localexplain" width="500" height="120"></canvas>
+                    </div>
+
+                    <p class="content is-medium"><i><b>Explanation:</b> For the sales value of July 2024, the sales
+                        value of July 2023 had a positive effect. Conversely, the sales from the previous two months
+                        had a slight negative impact.</i></p>
+
+<!--                    <li><b>Contrastive explanation:</b> The hypothetical time series that are as similar as possible to the-->
+<!--                        time series that is explained, while having a different forecasting result; i.e., "if the values-->
+<!--                        of these particular time series were different in the given sample, the forecasting result-->
+<!--                        would have been different.-->
+<!--                    </li>-->
+                </ul>
+            </div>
+
+
+<!--            <div class="box top-part">-->
+<!--                <p class="content is-medium">&#128204; In the context of contrasting explanations, complete the following exercise based on the local explanation. </p>-->
+<!--                <p class="content is-medium">Exercise: If the value of July 2023 has been increased, what the result-->
+<!--                    would be go up, remain stable and go down?</p>-->
+<!--                <form id='contrastive' style="margin-bottom: 20px;">-->
+<!--                    <input type="radio" id="goup" name="contrastiveexplanation" value="goup">-->
+<!--                    <label for="goup">Go up</label><br>-->
+<!--                    <input type="radio" id="stable" name="contrastiveexplanation" value="stable">-->
+<!--                    <label for="stable">Remain stable</label><br>-->
+<!--                    <input type="radio" id="godown" name="contrastiveexplanation" value="godown">-->
+<!--                    <label for="godown">Go down</label><br>-->
+<!--                </form>-->
+<!--                <button class="button is-primary" onclick="showResultForExercise()">Submit</button>-->
+<!--            </div>-->
+
+
+            <div class = 'Other terminology in time series area'>
+
+               
+
+            <!-- Next Page Button -->
+                <div class="has-text-centered mt-6">
+                    <form method="post">
+                        <input type="hidden" name="prolific_id" value="#PROLIFIC_ID#">
+                        <input type="hidden" name="consent_for" value="#SESSION_ID#">
+                        <button type="submit" class="button is-primary" formaction="/tutorial">Previous Page</button>
+                        <span style="margin: 10px;"></span>
+                        <button type="submit" class="button is-primary" formaction="/study">Start Exercise</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal" id="submitModalForTutorial">
+                <div class="modal-background" onclick="closeModal()"></div>
+                <div class="modal-content">
+                </div>
+                <button class="modal-close is-large" aria-label="close" onclick="closeModal()"></button>
+            </div>
+
+
+        </div>
+    </section>
+
+    <footer class="footer">
+      <div class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <p><strong>Prolific ID:</strong> #PROLIFIC_ID#</p>
+          </div>
+        </div>
+        <div class="level-right">
+          <div class="level-item">
+            <p><strong>Session ID:</strong> #SESSION_ID#</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>
+        window.onload = function () {
+            const ctx1 = document.getElementById('glassbox').getContext('2d');
+            const glassbox = new Chart(ctx1, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan 2021', 'Feb 2021', 'Mar 2021', 'Apr 2021', 'May 2021', 'Jun 2021', 'Jul 2021',
+                            'Aug 2021', 'Sep 2021', 'Oct 2021', 'Nov 2021', 'Dec 2021', 'Jan 2022', 'Feb 2022',
+                            'Mar 2022', 'Apr 2022', 'May 2022', 'Jun 2022', 'Jul 2022', 'Aug 2022', 'Sep 2022',
+                            'Oct 2022', 'Nov 2022', 'Dec 2022', 'Jan 2023', 'Feb 2023', 'Mar 2023', 'Apr 2023',
+                            'May 2023', 'Jun 2023', 'Jul 2023', 'Aug 2023', 'Sep 2023', 'Oct 2023', 'Nov 2023', 'Dec 2023'],
+                        datasets: [{
+                            label: 'Monthly Sales',
+                            data: [15753, 19011, 21555, 20493, 21752, 20251, 20759, 22479, 19904,
+       20626, 23800, 34824, 15907, 18020, 21332, 21143, 21945, 20618,
+       20795, 22775, 19909, 20469, 24560, 33923, 15780, 18424, 22207,
+       20463, 23560, 21294, 21733, 23121, 19782, 21203, 25364, 33950],
+                            backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                            borderColor: 'rgba(0, 123, 255, 1)',
+                            borderWidth: 1,
+                            pointRadius: 5
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Month'
+                                }
+                            },
+
+                            y: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Sales/£'
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        var label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            const formattedNumber = new Intl.NumberFormat('en-GB').format(context.parsed.y);
+
+                                            label += '£' + formattedNumber;
+                                        }
+                                        return label;
+                                    }
+                                }
+                            },
+                            annotation: {
+                                annotations: {
+                                    line1: { // This is an arbitrary ID for the annotation
+                                        type: 'line',
+                                        yMin: 20003.98133678, // Starting y value
+                                        yMax: 23862.54572922, // Ending y value (you might need to adjust this based on your data)
+                                        xMin: 'Jan 2021', // Starting x value
+                                        xMax: 'Dec 2023', // Ending x value (adjust according to your labels)
+                                        borderColor: 'red', // Line color
+                                        borderWidth: 2, // Line width
+                                        borderDash: [10, 5]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            )
+
+            const ctx2 = document.getElementById('localdata').getContext('2d');
+            const localdata = new Chart(ctx2, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jul 2023','Aug 2023', 'Sep 2023', 'Oct 2023', 'Nov 2023', 'Dec 2023','Jan 2024',
+                            'Feb 2024', 'Mar 2024', 'Apr 2024', 'May 2024', 'Jun 2024', 'Jul 2024'],
+                        datasets: [{
+                            label: 'Monthly Sales',
+                            data: [21733,23121,19782,21203,25364,33950,16319,19609,23862, 22598, 25827, 23434, 24098],
+                            backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                            borderColor: 'rgba(0, 123, 255, 1)',
+                            borderWidth: 1,
+                            pointRadius: 5,
+                            pointBackgroundColor: ['rgba(0, 123, 255, 0.5)', 'rgba(0, 123, 255, 0.5)',
+                                'rgba(0, 123, 255, 0.5)', 'rgba(0, 123, 255, 0.5)', 'rgba(0, 123, 255, 0.5)',
+                                'rgba(0, 123, 255, 0.5)', 'rgba(0, 123, 255, 0.5)', 'rgba(0, 123, 255, 0.5)',
+                                'rgba(0, 123, 255, 0.5)', 'rgba(0, 123, 255, 0.5)', 'rgba(0, 123, 255, 0.5)',
+                                'rgba(0, 123, 255, 0.5)',
+                                'red'], // Make the last point red
+                            pointBorderColor: ['rgba(0, 123, 255, 1)', 'rgba(0, 123, 255, 1)', 'rgba(0, 123, 255, 1)', 'rgba(0, 123, 255, 1)', 'rgba(0, 123, 255, 1)', 'rgba(0, 123, 255, 1)', 'rgba(0, 123, 255, 1)', 'rgba(0, 123, 255, 1)', 'rgba(0, 123, 255, 1)', 'rgba(0, 123, 255, 1)', 'rgba(0, 123, 255, 1)', 'rgba(0, 123, 255, 1)', 'red'] // Make the border of the last point red
+
+
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Month'
+                                },
+                                ticks: {
+                                    color: function (context) {
+                                        // Change the color of the label for "Dec 2023" to red
+                                        return context.tick.label === 'Jul 2024' ? 'red' : undefined;
+                                    }
+                                }
+
+                            },
+
+                            y: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Sales/£'
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        var label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            const formattedNumber = new Intl.NumberFormat('en-GB').format(context.parsed.y);
+
+                                            label += '£' + formattedNumber;
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            )
+
+            const ctx3 = document.getElementById('localexplain').getContext('2d');
+            const localexplain = new Chart(ctx3, {
+                    type: 'bar',
+                    data: {
+                        labels: ['lag12', 'lag11', 'lag10', 'lag9', 'lag8', 'lag7', 'lag6',
+                            'lag5', 'lag4', 'lag3', 'lag2', 'lag1', 'Jul 2024'],
+                        datasets: [
+                            {
+                                label: 'Positive Contribution',
+                                data: [4.39149401, 0.96616088, 1.3814913, 0.98808799, 0.98122892, 0.80557313, 1.15559446, 0.87286637, 0.05098759, 0.28464469, 0, 0, 0], // Positive values only, negative values set to 0
+                                backgroundColor: 'rgba(0, 123, 255, 0.5)', // Blue color for negative values
+                                borderColor: 'rgba(0, 123, 255, 1)',
+
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Negative Contribution',
+                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -0.0961696, -0.02570106, 0], // Negative values only, positive values set to 0
+                                backgroundColor: 'rgba(255, 0, 0, 0.5)', // Red color for positive values
+                                borderColor: 'rgba(255, 0, 0, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Month'
+                                },
+                                ticks: {
+                                    color: function (context) {
+                                        // Change the color of the label for "Dec 2023" to red
+                                        return context.tick.label === 'Jul 2024' ? 'red' : undefined;
+                                    }
+                                }
+                            },
+
+                            y: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'weight'
+                                }
+                            }
+                        },
+                        plugins: {
+
+                        }
+                    }
+                }
+            )
+
+
+        }
+
+
+        // function showResultForExercise(){
+        //     var selectedValue = document.querySelector('input[name="contrastiveexplanation"]:checked').value;
+        //     var correctAnswer = 'goup';
+        //     console.log('correctAnswer',correctAnswer);
+        //     console.log(selectedValue)
+        //     // Show the modal
+        //     var modal = document.getElementById('submitModalForTutorial');
+        //     modal.classList.add('is-active');
+        //
+        // // Set the content of the modal
+        //     var modalContent = document.querySelector('#submitModalForTutorial .modal-content');
+        //     if (selectedValue === correctAnswer) {
+        //         modalContent.innerHTML = '<div class="box"><p>Yes, this is the right answer. Increasing the sales ' +
+        //             'value for July 2023 will lead to an increase in the forecasted results because it has a positive ' +
+        //             'influence on the prediction for July 2024.</p><button class="button is-success" onclick="closeModal()">Close</button></div>';
+        //     } else {
+        //         modalContent.innerHTML = '<div class="box"><p>No, this is not the right answer. Increasing the sales ' +
+        //             'value for July 2023 will lead to an increase in the forecasted results because it has a positive ' +
+        //             'influence on the prediction for July 2024.</p><button class="button is-warning" onclick="closeModal()">Close</button></div>';
+        //     }
+        //
+        //     disableForm('contrastive');
+        // };
+        //
+        // function closeModal() {
+        //     var modal = document.getElementById('submitModalForTutorial');
+        //     modal.classList.remove('is-active');
+        // };
+        //
+        // function disableForm(formId) {
+        //     var radios = document.querySelectorAll('#' + formId + ' input[type=radio]');
+        //     for (var i = 0; i < radios.length; i++) {
+        //         radios[i].disabled = true;
+        //     }
+        // };
+    </script>
+</body>
+
+</html>
+
