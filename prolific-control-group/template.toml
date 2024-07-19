@@ -1,9 +1,0 @@
-# Provide the settings for the study server.
-
-[server]
-port = 8082
-
-[cookie]
-expiration = 0
-encrypt = "80y12yZDLCjfOqB748K4ZGKcbnw41eYF9YuoHzyJ1BPsE4QshywGmpRxpWHZjugJ"
-validate = "oZYd8bMFwQmhZ37BITqd8gu7uYuoJcalgxHMVk11wE57NZhM6Zaj0pQtAGvpYQ9L"
