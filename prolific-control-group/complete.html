@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Completion</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+    <section class="hero is-fullheight">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="title">Thank you for participating in this study!</h1>
+                <p class="subtitle">You will be redirected in <span id="countdown">5</span> seconds, <a href="/complete?check=#VERIFY_ID#">or you can click here</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        var seconds = 5;
+        var countdown = document.getElementById("countdown");
+
+        function updateCountdown() {
+            seconds--;
+            countdown.innerText = seconds;
+            if (seconds <= 0) {
+                window.location.href = "/complete?check=#VERIFY_ID#";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
