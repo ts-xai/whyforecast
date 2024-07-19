@@ -124,6 +124,8 @@ Figure 3: Tutorial Page2
 
 
 ## Link to the result
+The data of all experiment result can be found in: https://osf.io/gy7qc/
+
 
 
 
