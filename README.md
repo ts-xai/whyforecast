@@ -83,15 +83,20 @@ The core part of the study occurs at the `/study` endpoint. The way the system i
 ## Interface screenshot
 Figure 1 displays the consent page. The tutorial consists of two pages. Participants will learn about time series data, key terminology in time series analysis, forecasting models, and methods for explaining these models. Figures 2 and 3 show the contents of the tutorial.
 
-![consent_page](./interface_page/consent_page.png)
-*Figure 1: Consent Page*
+<p align="center">
+  <img src="./interface_page/consent_page.png" alt="Consent Page"/>
+</p>
+Figure 1: Consent Page
 
-![tutorial1](./interface_page/tutorial_1.png)
-*Figure 2: Tutorial Page1*
+<p align="center">
+  <img src="./interface_page/tutorial_1.png" alt="Tutorial Page 1"/>
+</p>
+Figure 2: Tutorial Page1
 
-![tutorial1](./interface_page/tutorial2.png)
-*Figure 3: Tutorial Page2*
-
+<p align="center">
+  <img src="./interface_page/tutorial2.png" alt="Tutorial Page2"/>
+</p>
+Figure 3: Tutorial Page2
 
 
 
