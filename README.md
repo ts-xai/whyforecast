@@ -81,7 +81,11 @@ python3 study_server/main.py --help
 The core part of the study occurs at the `/study` endpoint. The way the system interacts with this endpoint is defined in the `resources.py` file in the `StudyResource` class. If necessary, you can extend this class with additional code or files to support your specific study requirements.
 
 ## Interface screenshot
-![Project Logo](./interface_page/consent_page.png)
+![consent_page](./interface_page/consent_page.png)
+
+![tutorial1](./interface_page/tutorial_1.png)
+
+![tutorial1](./interface_page/tutorial2.png)
 
 
 
