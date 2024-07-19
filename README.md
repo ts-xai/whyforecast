@@ -2,9 +2,6 @@
 This project contains..
 
 ## Dataset Overview
-
-We validate the proposed algorithm and its corresponding explanations using two univariate time series forecasting datasets. These datasets pertain to electricity consumption and retail store sales, respectively.
-
 ### Superstore Sales Dataset
 - **Source:** Community.tableau.com (2017)
 - **Period:** 2014 to 2017
@@ -52,6 +49,66 @@ For time series data, using a simple random split into training and testing sets
 
 
 ## Prolifc study interface
+This is the template for conducting studies using the Prolific academic research platform. It helps handle complex tasks including session management, participant verification from Prolific, and persistent data storage for the study. 
 
-Treatment group: https://whyforecast1.bristol-xai.uk/consent?prolific_id=[Prolific_ID]
-Control group: https://whyforecast.bristol-xai.uk/consent?prolific_id=[Prolific_ID]
+Links of treatment and control group [_obey the policy of double-blind review, but will public once got the decision_]:
+
+- **Treatment group:** https://whyforecast1.xxx-xai.uk/consent?prolific_id=[Prolific_ID]
+- **Control group:** https://whyforecast.xxx-xai.uk/consent?prolific_id=[Prolific_ID]
+  
+Note: Replace [Prolific_ID] with the actual Prolific ID of each participant. 
+
+### Getting Started
+
+To begin using this project, you will need to install the dependencies listed in the `requirements.txt` file. If you're using a Mac with an M-series processor, you might encounter some difficulties while installing the `cryptography` package.
+
+### Running the Study
+
+To configure your study, you will need to modify a TOML configuration file. A template for this file, named `template.toml`, is provided. It is important to properly configure the `debug` option. During development, it's recommended to set `debug` to `false` to avoid complications arising from server configurations. Once the configuration file is ready, you can initiate the study using the following command:
+
+```bash
+python3 study_server/main.py --debug --config <path to config file> ...
+```
+
+The study allows templates for all components such as the consent, study, survey, and completion HTML. All of these need to be provided, for example:
+```bash
+... --db study.db --consent consent.html --study study.html --survey survey.html --complete complete.html
+```
+To view all available command line options at any point, you can use:
+```bash
+python3 study_server/main.py --help
+```
+The core part of the study occurs at the `/study` endpoint. The way the system interacts with this endpoint is defined in the `resources.py` file in the `StudyResource` class. If necessary, you can extend this class with additional code or files to support your specific study requirements.
+
+## Interface screenshot
+
+
+## Questionnaire
+
+| Category                                    | Question                                                                                     | Options                                             |
+|---------------------------------------------|---------------------------------------------------------------------------------------------|-----------------------------------------------------|
+| **Basic Information**                      | **Q1:** Do you have a STEM background? (STEM stands for science, technology, engineering, and mathematics) | Yes, No                                            |
+|                                             | **Q2:** Do you have machine learning experience?                                            | Yes, No                                            |
+|                                             | **Q3:** Do you have any prior time series forecasting experience?                            | Yes, No                                            |
+| **System satisfaction & The helpfulness of explanations** | **Q4:** How difficult was it for you to understand the concepts of lag and rolling window? | Five levels from Very easy to Very hard            |
+|                                             | **Q5:** Do you find the global explanation helps you understand time series prediction?      | Five levels from Very helpful to Not very helpful  |
+|                                             | **Q6 [Treatment]:** Which explanation conveys useful information when doing your prediction?| Lag, Rolling window, I don't think they are helpful, Both are helpful |
+|                                             | **Q6 [Control]:** Would you have liked to have some local explanations about your wrong answer? | Yes, No                                        |
+|                                             | **Q7:** Our exercises simulate a scenario where changing certain values leads to specific events, and local explanations provide insights into such cases. Do you think this would be helpful in real-world applications? | Five levels from Very helpful to Not very helpful |
+|                                             | **Q8:** What is your overall experience with this study?                                     | Five levels from Very satisfied to Not very satisfied |
+| **Curiosity & Trust**                       | **Q9 [Treatment]:** I wanted to understand how time series forecasting works, and this study helped me to achieve this to some extent. | Five levels from I agree strongly to I disagree strongly |
+|                                             | **Q9 [Control]:** I wanted to understand how time series forecasting works.                  | Five levels from I agree strongly to I disagree strongly |
+|                                             | **Q10 [Treatment]:** I feel the explanations have enhanced my confidence in AI systems in general. | Five levels from I agree strongly to I disagree strongly |
+|                                             | **Q10 [Control]:** I feel the explanations will enhance my confidence in AI systems in general. | Five levels from I agree strongly to I disagree strongly |
+|                                             | **Q11:** I believe good XAI tools will help the adoption of AI technologies.                 | Five levels from I agree strongly to I disagree strongly |
+| **Overall feedback**                        | **Q12 [Treatment]:** Could you provide a description of how you complete exercises based on the explanation? | Your response |
+|                                             | **Q12 [Control]:** Have you encountered any challenges while using the explanation?         | Your response                                       |
+|                                             | **Q13:** Do you have any additional comments or feedback?                                   | Your feedback                                       |
+
+
+## Link to the result
+
+
+
+
+
