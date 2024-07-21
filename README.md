@@ -4,7 +4,7 @@ This GitHub repository provides supplementary materials and source code for the 
 ## :pushpin: Prolifc study interface
 This is the template for conducting studies using the Prolific academic research platform. It helps handle complex tasks including session management, participant verification from Prolific, and persistent data storage for the study. 
 
-Links of treatment and control group [_obey the policy of double-blind review, but will public once got the decision_]:
+Links of treatment and control group [Obey the policy of double-blind review, full links will be made public upon decision notification.]:
 
 - **Treatment group:** https://whyforecast1.xxx-xai.uk/consent?prolific_id=[Prolific_ID]
 - **Control group:** https://whyforecast.xxx-xai.uk/consent?prolific_id=[Prolific_ID]
@@ -84,6 +84,8 @@ For time series data, using a simple random split into training and testing sets
 
 
 ## :pushpin: Interface screenshot
+The interface consists of four parts. The paper has already provided a screenshot of the 'exercise' section. Here, we will supplement it with the consent page and tutorial page. The questionnaire section is presented in tabular form below.
+
 Figure 1 displays the consent page. The tutorial consists of two pages. Participants will learn about time series data, key terminology in time series analysis, forecasting models, and methods for explaining these models. Figures 2 and 3 show the contents of the tutorial.
 
 <p align="center">
@@ -103,7 +105,7 @@ Figure 3: Tutorial Page2
 
 
 
-## :pushpin: Questionnaire
+## :pushpin: Questionnaire for control and treatment group
 
 | Category                                    | Question                                                                                     | Options                                             |
 |---------------------------------------------|---------------------------------------------------------------------------------------------|-----------------------------------------------------|
@@ -126,8 +128,8 @@ Figure 3: Tutorial Page2
 |                                             | **Q13:** Do you have any additional comments or feedback?                                   | Your feedback                                       |
 
 
-## :pushpin: Link to the result
-The data of all experiment result can be found in: https://osf.io/gy7qc/
+## :pushpin: Link to the exercise and questionnaire results
+We have recruited participants for the control and treatment groups via Prolific to complete our experiment. Data from the surveys and experimental results are included in the link: https://osf.io/gy7qc/. Please note that all personally identifiable information has been removed.
 
 
 
