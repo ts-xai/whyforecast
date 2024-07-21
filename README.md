@@ -53,7 +53,6 @@ Spanish Electricity Market Dataset
 
 For time series data, using a simple random split into training and testing sets is untenable as it doesn't respect the temporal order and can lead to data leakage. Instead, the data must be split temporally to preserve its chronological integrity.
 
-### :three: Partitioning Details
 
 | Dataset         | Training Period         | Testing Period        |
 |-----------------|-------------------------|-----------------------|
