@@ -1,6 +1,9 @@
 # :sunglasses: WhyForecast
 This GitHub repository provides supplementary materials and source code for the paper titled 'TSFeatLIME: An Online User Study in Enhancing Explainability in Univariate Time Series Forecasting.' These resources are intended to support and extend the research findings presented in the paper.
 
+## :pushpin: TSFeatLIME
+TSFeatLIME includes the code for the TSFeatLIME algorithm. Please refer to the README in that folder for more details about it.
+
 ## :pushpin: Prolifc study interface
 This is the template for conducting studies using the Prolific academic research platform. It helps handle complex tasks including session management, participant verification from Prolific, and persistent data storage for the study. 
 
