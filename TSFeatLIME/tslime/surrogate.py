@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 
 
+
 class LinearSurrogateModel:
     """Linear Interpretable Surrogate Model Wrapper."""
 
@@ -34,8 +35,7 @@ def linear_surrogate_weights(
     x_perturbations: np.ndarray,
     y_perturbations: np.ndarray,
     surrogate: LinearSurrogateModel = None,
-    weights:np.ndarray = None,
-
+    weights: np.ndarray = None,
 ):
     """Function to compute weights from a linear interpretable model
     using provided time series pertubations."""
@@ -49,6 +49,8 @@ def linear_surrogate_weights(
         sample_weight = weights
     )
 
-
     # retrieve weights
     return surrogate, surrogate.get_weights()
+
+
+

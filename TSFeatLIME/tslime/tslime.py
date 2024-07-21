@@ -4,7 +4,7 @@ import pandas as pd
 from typing import Union, List, Callable
 from tslbbe import TSLocalBBExplainer
 from tsutils.tsframe import tsFrame, to_np_array
-from tslime.surrogate import (
+from tslimePrevious.surrogate import (
     linear_surrogate_weights,
     LinearSurrogateModel,
 )
@@ -112,6 +112,7 @@ class TSLimeExplainer(TSLocalBBExplainer):
         self.random_seed = random_seed
         # whether use weight
         self.use_weight = use_weight
+
     def get_params(self):
         return self._parameters.copy()
 
@@ -130,9 +131,8 @@ class TSLimeExplainer(TSLocalBBExplainer):
 
         x_perturbations = np.asarray(x_perturbations).astype("float")
         return x_perturbations
- 
-#  get the y values from the original model.
-    def _batch_predict(self, x_perturbations): 
+
+    def _batch_predict(self, x_perturbations):
         f_predict_samples = None
 
         try:
@@ -150,7 +150,6 @@ class TSLimeExplainer(TSLocalBBExplainer):
 
         return f_predict_samples
 
-# explain a specific instance
     def explain_instance(self, ts: tsFrame, **explain_params):
         """Explain the prediction made by the time series model at a certain point in time
         (**local explanation**).
@@ -162,7 +161,7 @@ class TSLimeExplainer(TSLocalBBExplainer):
                 (that is ``DatetimeIndex``). Each column corresponds to an input feature.
             explain_params: Arbitrary explainer parameters.
 
-        Returns:
+        Returns:TSLIME
             dict: explanation object
                 Dictionary with keys: input_data, history_weights, model_prediction,
                 surrogate_prediction, x_perturbations, y_perturbations.
@@ -174,6 +173,7 @@ class TSLimeExplainer(TSLocalBBExplainer):
     def _explain_instance(
         self,
         ts: tsFrame,
+        # use_weight: bool = False,
         **explain_params,
     ):
         # for consistent results. Is it possible here?
@@ -192,10 +192,10 @@ class TSLimeExplainer(TSLocalBBExplainer):
         ### generate time series perturbations
         x_perturbations = self._ts_perturb(x=xc)
 
-        ### compute instance and give the weight
+        ### compute distance and give the weight
         distance = np.array([np.linalg.norm(x - xc) for x in x_perturbations])
-        kernel_width = 0.5
-        weights = np.exp(-np.square(distance) / kernel_width ** 2)
+        kernel_width= 0.5
+        weights= np.exp(-np.square(distance) / kernel_width ** 2)
 
         ### generate y
         y_perturbations = self._batch_predict(x_perturbations)
@@ -210,90 +210,34 @@ class TSLimeExplainer(TSLocalBBExplainer):
         x_perturbations = x_perturbations[
             :, -self.relevant_history :
         ]  # consider only k time points
-        ## extract more features. 
-        extract_perturbations = []
-        for perturbation in x_perturbations:
-          # print('perturbation',perturbation)
-          df = pd.DataFrame(perturbation, columns = ['Sales'])
-          print('df_before',df)
-          df['Rolling_Mean3'] = df['Sales'].rolling(window=3).mean()
-          ##print('df_before',df)
-          df['reversed_Sales'] = df['Sales'][::-1].reset_index(drop=True)
-          ##print('df',df['reversed_Sales'])
-          df['Expanding_Mean'] = df['reversed_Sales'].expanding(min_periods=4).mean()
-          # df.loc[0, 'Expanding_Mean'] = np.nan
-          # df.loc[2, 'Expanding_Mean'] = np.nan
-          print('df_after',df)
-          ###if i consider all features and delete unimportant.
-          perturbation_extended = np.vstack((perturbation, df['Rolling_Mean3'].values.reshape(-1, 1),
-                                             df['Expanding_Mean'].values.reshape(-1, 1)))
-          ##print('perturbation_extended before',perturbation_extended)
-          perturbation_extended = perturbation_extended[~np.isnan(perturbation_extended)]
-          ##print('perturbation_extended after',perturbation_extended)
-          extract_perturbations.append(perturbation_extended)
-          ##print('extract_perturbations',extract_perturbations)
-        result_perturbations_np = np.array(extract_perturbations)
-        # extract_perturbations_np = np.array(extract_perturbations)
-        # print('result_perturbations_np',result_perturbations_np)
-
-
-
-      
 
         xc_relevant = xc[-self.relevant_history :, :].reshape(1, -1)
-        # print('xc_relevant',xc_relevant)
-
-        ###extract the feature for a specific instance(feature need to be explained)
-        
-        df_instance = pd.DataFrame(xc_relevant.T, columns=['Sales'])
-
-        # Calculate Rolling Mean with window size 3
-        df_instance['Rolling_Mean3'] = df_instance['Sales'].rolling(window=3).mean()
-
-        df_instance['reversed_Sales'] = df_instance['Sales'][::-1].reset_index(drop=True)
-        ##print('df_instance', df_instance['reversed_Sales'])
-        df_instance['Expanding_Mean'] = df_instance['reversed_Sales'].expanding(min_periods=4).mean()
-
-
-        # df_instance['Expanding_Mean'] = df_instance['Sales'].expanding().mean()
-        # df_instance.loc[0, 'Expanding_Mean'] = np.nan
-        # df_instance.loc[2, 'Expanding_Mean'] = np.nan
-
-        # Append the last 5 rolling means to xc_relevant
-        # last_5_rolling_means = df_instance['Rolling_Mean3'].iloc[-5:].values.reshape(1, -1)
-        xc_extended = np.hstack((xc_relevant, df_instance['Rolling_Mean3'].values.reshape(1,-1),
-                                 df_instance['Expanding_Mean'].values.reshape(1,-1)))
-        xc_extended = xc_extended[~np.isnan(xc_extended)].reshape(1,-1)
-        # print('xc_extended',xc_extended)
 
         ### compute weights using a linear model
         if self.use_weight:
             surrogate, history_weights = linear_surrogate_weights(
                 surrogate=self.local_interpretable_model,
-                x_perturbations= result_perturbations_np,
+                x_perturbations=x_perturbations,
                 y_perturbations=y_perturbations,
                 weights=weights,
             )
-            print('use weight')
+            print("use weight")
         else:
             surrogate, history_weights = linear_surrogate_weights(
                 surrogate=self.local_interpretable_model,
-                x_perturbations=result_perturbations_np,
+                x_perturbations=x_perturbations,
                 y_perturbations=y_perturbations,
+                # weights=weights,
             )
-            print('not use weight')
+            print("not use weight")
         model_prediction = self._batch_predict(xc)
-        ##the prediction value from black box.
 
- ## extract xc_relevant
-        # print('xc_relevant_type',type(xc_relevant))
-        surrogate_prediction = surrogate.predict(xc_extended)
+        surrogate_prediction = surrogate.predict(xc_relevant)
         explanation = {
             "input_data": ts,
             "model_prediction": model_prediction,
             "surrogate_prediction": surrogate_prediction,
-            "history_weights": history_weights,
-            # "history_weights": history_weights.reshape(self.relevant_history, -1),
+            "history_weights": history_weights.reshape(self.relevant_history, -1),
             "x_perturbations": x_perturbations,
             "y_perturbations": y_perturbations,
         }
