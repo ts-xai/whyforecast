@@ -25,7 +25,7 @@ python3 study_server/main.py --debug --config <path to config file> ...
 
 The study allows templates for all components such as the consent, study, survey, and completion HTML. All of these need to be provided, for example:
 ```bash
-... --db study.db --consent consent.html --study study.html --survey survey.html --complete complete.html
+... --db study.db --consent consent.html --tutorial tutorial.html --tutorial2 tutorial2.html --study study.html --survey survey.html --complete complete.html
 ```
 To view all available command line options at any point, you can use:
 ```bash
