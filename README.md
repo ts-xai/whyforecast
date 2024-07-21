@@ -60,6 +60,8 @@ For time series data, using a simple random split into training and testing sets
 | Consumption     | 2014.01.01 - 2017.12.01 | 2018.01.01 - 2018.12.01|
 
 ## :pushpin: Univariate time series forecasting results
+We have supplemented the results of the experiments for training the black box models. The **stacked LSTM** emerges as the superior model for furniture sales forecasting, while the **Vanilla LSTM ** excels in electricity consumption forecasting.
+
 
 | Dataset      | Time Series Model  | RMSE       | MAPE     |
 |--------------|--------------------|------------|----------|
